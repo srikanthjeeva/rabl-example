@@ -73,3 +73,168 @@ ActionView::Template::Error (undefined method `profile' for #<User:0xa8451fc>):
 Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.7ms)
 Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.5ms)
 Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p290/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (15.0ms)
+  [1m[36mSQL (0.2ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (143.1ms)[0m  CREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB
+  [1m[36mSQL (0.4ms)[0m  [1mSHOW KEYS FROM `schema_migrations`[0m
+  [1m[35mSQL (258.7ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)
+  [1m[36mSQL (0.2ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.1ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.1ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+Migrating to CreateUsers (20120528192331)
+  [1m[35mSQL (129.5ms)[0m  CREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `email` varchar(255), `username` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (41.0ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120528192331')[0m
+Migrating to CreatePeople (20120528192338)
+  [1m[35mSQL (123.6ms)[0m  CREATE TABLE `people` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `guid` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (40.7ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120528192338')[0m
+Migrating to CreateProfiles (20120528192359)
+  [1m[35mSQL (131.9ms)[0m  CREATE TABLE `profiles` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `first_name` varchar(255), `last_name` varchar(255), `designation` varchar(255), `location` varchar(255), `department` varchar(255), `person_id` int(11), `searchable` tinyint(1), `bio` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36mSQL (40.8ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20120528192359')[0m
+  [1m[35mSQL (0.3ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.2ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations`[0m
+  [1m[35mSQL (0.2ms)[0m  SHOW TABLES
+  [1m[36mSQL (0.6ms)[0m  [1mdescribe `people`[0m
+  [1m[35mSQL (0.2ms)[0m  SHOW KEYS FROM `people`
+  [1m[36mSQL (0.6ms)[0m  [1mdescribe `profiles`[0m
+  [1m[35mSQL (0.2ms)[0m  SHOW KEYS FROM `profiles`
+  [1m[36mSQL (0.4ms)[0m  [1mdescribe `users`[0m
+  [1m[35mSQL (0.2ms)[0m  SHOW KEYS FROM `users`
+DEPRECATION WARNING: config.action_view.debug_rjs will be removed in 3.1, from 3.1 onwards you will need to install prototype-rails to continue to use RJS templates . (called from service at /home/srikanth/.rvm/rubies/ruby-1.9.2-p318/lib/ruby/1.9.1/webrick/httpserver.rb:111)
+
+
+Started GET "/users.jsom" for 127.0.0.1 at 2012-05-29 12:49:41 +0530
+  Processing by UsersController#index as 
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  [1m[35mProfile Load (0.4ms)[0m  SELECT `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1
+Mysql2::Error: Unknown column 'profiles.user_id' in 'where clause': SELECT  `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1
+Rendered users/index.json.rabl (20.6ms)
+Completed 500 Internal Server Error in 124ms
+
+ActionView::Template::Error (Mysql2::Error: Unknown column 'profiles.user_id' in 'where clause': SELECT  `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1):
+    1: object @users
+    2: attributes :id, :username
+    3: child :profile do
+    4:   attributes :id, :first_name, :last_name
+  app/views/users/index.json.rabl:1:in `_app_views_users_index_json_rabl__4235993332953937949_19845820_1479723479066899617'
+
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.4ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (3.1ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (9.1ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 12:49:44 +0530
+  Processing by UsersController#index as JSON
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  [1m[35mProfile Load (1.4ms)[0m  SELECT `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1
+Mysql2::Error: Unknown column 'profiles.user_id' in 'where clause': SELECT  `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1
+Rendered users/index.json.rabl (10.2ms)
+Completed 500 Internal Server Error in 45ms
+
+ActionView::Template::Error (Mysql2::Error: Unknown column 'profiles.user_id' in 'where clause': SELECT  `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1):
+    1: object @users
+    2: attributes :id, :username
+    3: child :profile do
+    4:   attributes :id, :first_name, :last_name
+  app/views/users/index.json.rabl:1:in `_app_views_users_index_json_rabl__4235993332953937949_28444500_1479723479066899617'
+
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.4ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.7ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 12:50:04 +0530
+  Processing by UsersController#index as JSON
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  [1m[35mProfile Load (0.4ms)[0m  SELECT `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1
+Mysql2::Error: Unknown column 'profiles.user_id' in 'where clause': SELECT  `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1
+Rendered users/index.json.rabl (14.8ms)
+Completed 500 Internal Server Error in 23ms
+
+ActionView::Template::Error (Mysql2::Error: Unknown column 'profiles.user_id' in 'where clause': SELECT  `profiles`.* FROM `profiles` WHERE (`profiles`.user_id = 1) LIMIT 1):
+    1: object @users
+    2: attributes :id, :username
+    3: child :profile do
+    4:   attributes :id, :first_name, :last_name
+  app/views/users/index.json.rabl:1:in `_app_views_users_index_json_rabl__4235993332953937949_15127140_1479723479066899617'
+
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.2ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.1ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.7ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 12:50:23 +0530
+  Processing by UsersController#index as JSON
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+Rendered users/index.json.rabl (4.2ms)
+Completed 200 OK in 10ms (Views: 6.5ms | ActiveRecord: 0.6ms)
+DEPRECATION WARNING: config.action_view.debug_rjs will be removed in 3.1, from 3.1 onwards you will need to install prototype-rails to continue to use RJS templates . (called from service at /home/srikanth/.rvm/rubies/ruby-1.9.2-p318/lib/ruby/1.9.1/webrick/httpserver.rb:111)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 14:16:01 +0530
+  Processing by UsersController#index as JSON
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+Rendered users/index.json.rabl (29.7ms)
+Completed 200 OK in 85ms (Views: 32.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 14:16:33 +0530
+  Processing by UsersController#index as JSON
+  [1m[35mUser Load (0.2ms)[0m  SELECT `users`.* FROM `users`
+Rendered users/index.json.rabl (4.5ms)
+Completed 500 Internal Server Error in 10ms
+
+ActionView::Template::Error ((eval):2: syntax error, unexpected '\n', expecting tASSOC):
+    1: object @users
+    2: attributes :username => :id, :email
+  app/views/users/index.json.rabl:1:in `_app_views_users_index_json_rabl___1853846952113213667_21023560_3238506078141705256'
+
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.1ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (6.0ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (10.3ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 14:16:46 +0530
+  Processing by UsersController#index as JSON
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+Rendered users/index.json.rabl (4.6ms)
+Completed 200 OK in 39ms (Views: 6.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 14:20:14 +0530
+  Processing by UsersController#index as JSON
+  [1m[35mUser Load (0.3ms)[0m  SELECT `users`.* FROM `users`
+  [1m[36mPerson Load (0.3ms)[0m  [1mSELECT `people`.* FROM `people` WHERE (`people`.user_id = 1) LIMIT 1[0m
+Rendered users/index.json.rabl (38.9ms)
+Completed 500 Internal Server Error in 45ms
+
+ActionView::Template::Error (undefined method `department' for "#<Person:0x00000001e4b2a8>":Person):
+    1: object @users
+    2: attributes :username => :id
+    3: attributes :email
+    4: node(:department){|user| user.person.department}
+  app/views/users/index.json.rabl:1:in `_app_views_users_index_json_rabl___1853846952113213667_22947040_3238506078141705256'
+
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.3ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (2.3ms)
+Rendered /home/srikanth/.rvm/gems/ruby-1.9.2-p318/gems/actionpack-3.0.11/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (6.8ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 14:20:25 +0530
+  Processing by UsersController#index as JSON
+  [1m[35mUser Load (0.3ms)[0m  SELECT `users`.* FROM `users`
+  [1m[36mPerson Load (0.3ms)[0m  [1mSELECT `people`.* FROM `people` WHERE (`people`.user_id = 1) LIMIT 1[0m
+  [1m[35mProfile Load (0.4ms)[0m  SELECT `profiles`.* FROM `profiles` WHERE (`profiles`.person_id = 1) LIMIT 1
+  [1m[36mPerson Load (0.3ms)[0m  [1mSELECT `people`.* FROM `people` WHERE (`people`.user_id = 2) LIMIT 1[0m
+  [1m[35mProfile Load (0.2ms)[0m  SELECT `profiles`.* FROM `profiles` WHERE (`profiles`.person_id = 2) LIMIT 1
+Rendered users/index.json.rabl (28.4ms)
+Completed 200 OK in 35ms (Views: 29.9ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/users.json" for 127.0.0.1 at 2012-05-29 14:22:27 +0530
+  Processing by UsersController#index as JSON
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT `users`.* FROM `users`[0m
+  [1m[35mPerson Load (0.2ms)[0m  SELECT `people`.* FROM `people` WHERE (`people`.user_id = 1) LIMIT 1
+  [1m[36mProfile Load (0.3ms)[0m  [1mSELECT `profiles`.* FROM `profiles` WHERE (`profiles`.person_id = 1) LIMIT 1[0m
+  [1m[35mPerson Load (0.2ms)[0m  SELECT `people`.* FROM `people` WHERE (`people`.user_id = 2) LIMIT 1
+  [1m[36mProfile Load (0.1ms)[0m  [1mSELECT `profiles`.* FROM `profiles` WHERE (`profiles`.person_id = 2) LIMIT 1[0m
+Rendered users/index.json.rabl (55.6ms)
+Completed 200 OK in 62ms (Views: 56.9ms | ActiveRecord: 1.2ms)
